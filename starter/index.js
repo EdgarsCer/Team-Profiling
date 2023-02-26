@@ -16,61 +16,107 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
  let team = [];
 
  async function startProgram(){
-    const managerData = await inquirer.prompt([
+    console.log("Let's build your team!");
+    
+    // Prompt the user to enter the manager's details first
+    const { name, id, email, officeNumber } = await inquirer.prompt([
         {
-            type: 'input',
-            name: 'name',
-            message: "What is the manager's name?",
+            type: "input",
+            name: "name",
+            message: "Enter the manager's name:"
         },
         {
-            type: 'input',
-            name: 'id',
-            message: "What is the manager's ID?",
+            type: "input",
+            name: "id",
+            message: "Enter the manager's ID:"
         },
         {
-            type: 'input',
-            name: 'email',
-            message: "What is the manager's email?",
+            type: "input",
+            name: "email",
+            message: "Enter the manager's email:"
         },
         {
-            type: 'input',
-            name: 'officeNumber',
-            message: "What is the manager's office number?",
-        },
+            type: "input",
+            name: "officeNumber",
+            message: "Enter the manager's office number:"
+        }
     ]);
 
-    const manager = new Manager(managerData.name, managerData.id, managerData.email, managerData.officeNumber);
+    // Create a new Manager instance and add it to the team array
+    const manager = new Manager(name, id, email, officeNumber);
     team.push(manager);
 
-    
-    let htmlDoc = render(team);
+    // Prompt the user to add an engineer or intern
+    let addEmployee = true;
+    while (addEmployee) {
+        const { employeeType } = await inquirer.prompt([
+            {
+                type: "list",
+                name: "employeeType",
+                message: "What type of employee do you want to add?",
+                choices: ["Engineer", "Intern", "I don't want to add any more employees"]
+            }
+        ]);
+        // Prompt the user to enter the employee's details
+        // Create a new instance of the chosen employee type and add it to the team array
+        // Repeat the loop if the user wants to add another employee
+
+        if (employeeType === "Engineer") {
+                    const engineerData = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: "What is the engineer's name?",
+                },
+                {
+                    type: 'input',
+                    name: 'id',
+                    message: "What is the engineer's ID?",
+                },
+                {
+                    type: 'input',
+                    name: 'email',
+                    message: "What is the engineer's email?",
+                },
+                {
+                    type: 'input',
+                    name: 'gitHub',
+                    message: "What is the engineer's GitHub User Name?",
+                },
+            ]);
+        }
+        else if (employeeType === "Intern"){
+            const internData = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: "What is the intern's name?",
+                },
+                {
+                    type: 'input',
+                    name: 'id',
+                    message: "What is the intern's ID?",
+                },
+                {
+                    type: 'input',
+                    name: 'email',
+                    message: "What is the intern's email?",
+                },
+                {
+                    type: 'input',
+                    name: 'school',
+                    message: "What is the intern's School Name?",
+                },
+            ]);
+        }
+        else{
+            addEmployee = false;
+        }
+    }
+
+    let htmlDoc = render(team)
+
     await fs.writeFile(outputPath, htmlDoc, () => {});
 }
 
 
-
-
-
-
-const engineerData = await inquirer.prompt([
-    {
-        type: 'input',
-        name: 'name',
-        message: "What is the engineer's name?",
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: "What is the engineer's ID?",
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: "What is the engineer's email?",
-    },
-    {
-        type: 'input',
-        name: 'officeNumber',
-        message: "What is the engineer's GitHub User Name?",
-    },
-]);
