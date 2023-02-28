@@ -3,7 +3,7 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
-const fs = require("fs/promises");
+const fs = require("fs");
 const render = require("./src/page-template.js");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
