@@ -24,8 +24,3 @@
   ## Relevant Links
   
   https://github.com/EdgarsCer/Team-Profiling
-
-  https://edgarscer.github.io/Team-Profiling/
-  
-  
-  
